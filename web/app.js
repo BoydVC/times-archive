@@ -48,10 +48,10 @@ function historyCard(D){
       const why = it.date < A.range.first ? `before the first edition (${fmtShort(A.range.first)})` : (it.date > A.range.last ? 'not published yet' : 'no edition saved');
       return `<div class="hist-item" style="cursor:default;opacity:.62"><div></div><div><div class="when">${it.label} · ${fmtShort(it.date)}</div><div class="h" style="font-family:NewsDeck;font-style:italic">No paper — ${why}.</div></div></div>`;
     }
-    return it.eds.map(e => `<div class="hist-item" onclick="location.hash='#/read/${e.id}'"><img src="${src(e.pages[0].thumb)}" alt=""><div><div class="when">${it.label} · ${e.weekday.slice(0,3)} ${fmtShort(e.date)} · No. ${e.num}</div><div class="h">${esc(lead(e).headline)}</div>${e.standing.dad_joke && it.label!=='This date' ? `<div class="note" style="margin-top:4px">Dad joke that day: ${esc(e.standing.dad_joke.text)}</div>` : ''}</div></div>`).join('');
+    return it.eds.map(e => `<div class="hist-item" role="link" tabindex="0" onclick="location.hash='#/read/${e.id}'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"><img src="${src(e.pages[0].thumb)}" alt=""><div><div class="when">${it.label} · ${e.weekday.slice(0,3)} ${fmtShort(e.date)} · No. ${e.num}</div><div class="h">${esc(lead(e).headline)}</div>${e.standing.dad_joke && it.label!=='This date' ? `<div class="note" style="margin-top:4px">Dad joke that day: ${esc(e.standing.dad_joke.text)}</div>` : ''}</div></div>`).join('');
   }).join('');
   return `<div class="card history"><div class="kick">This day in Parent A history</div><h3>${fmtLong(D)}</h3>
-    <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><input type="date" id="histDate" value="${D}" min="${A.range.first}" style="font-family:Franklin;border:1px solid var(--ink);background:transparent;padding:3px 6px"><button class="btn" id="histRand" style="padding:4px 9px">Surprise me</button></div>
+    <div style="display:flex;gap:6px;align-items:center;margin-bottom:6px"><input type="date" id="histDate" aria-label="Pick a date" value="${D}" min="${A.range.first}" style="font-family:Franklin;border:1px solid var(--ink);background:transparent;padding:3px 6px"><button class="btn" id="histRand" style="padding:4px 9px">Surprise me</button></div>
     ${rows}</div>`;
 }
 function wireHistory(container){
@@ -74,7 +74,7 @@ function viewHome(){
      <div class="kick">Latest edition · No. ${last.num} · ${esc(last.as_of || '')}</div>
      <h2 class="lead-hed"><a href="#/read/${last.id}">${esc(L.headline)}</a></h2>
      ${L.deck ? `<p class="deck">${esc(L.deck)}</p>` : ''}
-     <img class="frontimg" src="${src(last.pages[0].img)}" alt="Front page ${last.date}" onclick="location.hash='#/read/${last.id}'">
+     <a class="frontimg-link" href="#/read/${last.id}" aria-label="Open front page ${last.date}"><img class="frontimg" src="${src(last.pages[0].img)}" alt="Front page ${last.date}"></a>
    </section>
    <section>${historyCard(todayISO())}
      ${sf.dad_joke ? `<div style="margin-top:20px"><div class="kick">Today's dad joke, as printed</div><div class="quote">${esc(sf.dad_joke.text)}</div><div class="note">— ${esc(sf.dad_joke.attribution || '')}</div></div>` : ''}

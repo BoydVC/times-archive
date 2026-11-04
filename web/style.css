@@ -144,3 +144,7 @@ footer{max-width:1360px;margin:0 auto;padding:16px 28px 40px;border-top:3px doub
 @media (max-width:1100px){.homegrid,.reader,.twocol{grid-template-columns:1fr}.homegrid>section{border-right:0;padding-right:0}.mast h1{font-size:48px}.reader aside{position:static}}
 /* QA sweep 2026-10-07: phone widths (390px) */
 @media (max-width:640px){.heat{display:block;overflow-x:auto}#q{max-width:100%;box-sizing:border-box}code{overflow-wrap:anywhere;word-break:break-word}}
+
+/* First-Run Lab fix: visible keyboard focus everywhere */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,[role=link]:focus-visible,[tabindex]:focus-visible{outline:3px solid #9b1c1c;outline-offset:2px}
+.frontimg-link{display:block}
